@@ -1,0 +1,17 @@
+#!/bin/expect -f
+
+set timeout 3
+spawn ssh -oHostKeyAlgorithms=+ssh-rsa superadmin@192.168.0.1
+expect {
+	timeout { send_user "Connection timeout"; exit }
+	"assword:" { send "superadmin_password\r" }
+}
+expect {
+	timeout { send_user "Connection timeout"; exit }
+	 ">" { send "sh\r" }
+}
+expect {
+	timeout { send_user "Connection timeout"; exit }
+	 "#"
+}
+interact
